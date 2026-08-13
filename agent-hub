@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "$0")" && pwd)"
+cd "$ROOT_DIR"
+
+if [ -x "./agent-hub-bin" ]; then
+  exec ./agent-hub-bin "$@"
+fi
+
+if command -v go >/dev/null 2>&1; then
+  exec go run ./cmd/agent-hub "$@"
+fi
+
+exec python3 -m agent_hub "$@"
