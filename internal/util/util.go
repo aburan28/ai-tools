@@ -11,6 +11,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	"agent-hub/internal/model"
@@ -25,11 +26,11 @@ func NormalizeOptional(value any) string {
 
 	switch typed := value.(type) {
 	case string:
-		value = strings.TrimSpace(typed)
-		if value == "" || nullLikePattern.MatchString(strings.ToLower(value)) {
+		cleaned := strings.TrimSpace(typed)
+		if cleaned == "" || nullLikePattern.MatchString(strings.ToLower(cleaned)) {
 			return ""
 		}
-		return value
+		return cleaned
 	case bool:
 		if typed {
 			return "true"
@@ -188,7 +189,7 @@ func IsPIDAlive(pid int) bool {
 	if err != nil {
 		return false
 	}
-	if err := proc.Signal(0); err != nil {
+	if err := proc.Signal(syscall.Signal(0)); err != nil {
 		return false
 	}
 	return true

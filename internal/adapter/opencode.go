@@ -1,7 +1,6 @@
 package adapter
 
 import (
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"

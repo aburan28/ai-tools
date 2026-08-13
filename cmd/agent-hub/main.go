@@ -32,6 +32,10 @@ func run(args []string) int {
 	command := args[0]
 	subArgs := args[1:]
 	switch command {
+	case "install":
+		return cmdInstall(subArgs)
+	case "mcp":
+		return cmdMCP(subArgs)
 	case "list":
 		return cmdList(subArgs)
 	case "search":
@@ -689,6 +693,8 @@ func findAdapterByAgent(adapters []adapter.SessionAdapter, name string) adapter.
 func printUsage() {
 	fmt.Println("agent-hub <command> [options]")
 	fmt.Println("commands:")
+	fmt.Println("  install [--force] [--bin-dir DIR] install binary and configure MCP clients")
+	fmt.Println("  mcp     run the stdio MCP server (normally launched by a client)")
 	fmt.Println("  list    --agent [claude|codex|opencode|all] --json --status")
 	fmt.Println("  search  [--agent ...] <query> [--limit N] [--json]")
 	fmt.Println("  inspect [--agent ...] <session-id>")
